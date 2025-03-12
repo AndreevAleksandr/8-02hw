@@ -23,7 +23,7 @@ pipeline {
         stage('Upload to Nexus') {
             steps {
                 script {
-                    sh 'curl -u "admin:admin" http://92.100.72.116:8081/repository/go-binaries/ --upload-file ./myapp \
+                    sh 'curl -u "admin:admin" http://92.100.72.116:8081/repository/go-binaries/ --upload-file ./myapp'
                 }
             }
        }
