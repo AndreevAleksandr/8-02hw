@@ -3,8 +3,6 @@ pipeline {
     
     environment {
         PATH = "$PATH:/usr/local/go/bin"
-        NEXUS_URL = 'http://<192.168.128.43>:8081/repository/go-binaries/'
-        NEXUS_CREDS = credentials('nexus-credentials')
     }
     
     stages {
