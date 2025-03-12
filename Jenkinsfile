@@ -23,10 +23,7 @@ pipeline {
         stage('Upload to Nexus') {
             steps {
                 script {
-                    sh """
-                    curl -v -u ${NEXUS_CREDS_USR}:${NEXUS_CREDS_PSW} --upload-file ./myapp \
-                    ${NEXUS_URL}/myapp
-                    """
+                    sh 'curl -u "admin:admin" http://92.100.72.116:8081/repository/go-binaries/ --upload-file ./myapp \
                 }
             }
        }
