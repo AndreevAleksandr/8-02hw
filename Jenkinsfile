@@ -2,6 +2,8 @@ pipeline {
     agent any
     environment {
         PATH = "$PATH:/usr/local/go/bin"
+        NEXUS_URL = 'http://<192.168.128.43>:8081/repository/go-binaries/'
+        NEXUS_CREDS = credentials('nexus-credentials')
     }
     stages {
         stage('Checkout') {
@@ -11,13 +13,17 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'go test ./...'
+                sh 'go build -o myapp main.go'
             }
         }
-        stage('Build Docker') {
+        stage('Upload to Nexus') {
             steps {
-                sh 'docker build -t my-go-app .'
+                script {
+                    sh """
+                    curl -v -u ${NEXUS_CREDS_USR}:${NEXUS_CREDS_PSW} --upload-file ./myapp \
+                    ${NEXUS_URL}/myapp
+                    """
+                }
             }
-        }
     }
 }
